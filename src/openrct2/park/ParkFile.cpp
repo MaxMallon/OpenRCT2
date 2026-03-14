@@ -281,7 +281,7 @@ namespace OpenRCT2
                     cs.readWrite(image.type);
                     cs.readWrite(image.width);
                     cs.readWrite(image.height);
-                    cs.readWriteArray(image.pixels, [&cs](Drawing::PaletteIndex& pixel) {
+                    cs.readWriteArray(image.pixels, [&cs](uint8_t& pixel) {
                         cs.readWrite(pixel);
                         return true;
                     });
@@ -623,7 +623,7 @@ namespace OpenRCT2
                     cs.readWrite(image.type);
                     cs.readWrite(image.width);
                     cs.readWrite(image.height);
-                    cs.readWriteArray(image.pixels, [&cs](Drawing::PaletteIndex& pixel) {
+                    cs.readWriteArray(image.pixels, [&cs](uint8_t& pixel) {
                         cs.readWrite(pixel);
                         return true;
                     });

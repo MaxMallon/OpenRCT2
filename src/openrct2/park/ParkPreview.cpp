@@ -173,7 +173,7 @@ namespace OpenRCT2
                 if (mapX < 1)
                     break;
 
-                image.pixels[y * image.width + x] = getPreviewColourByTilePos({ mapX, mapY });
+                image.pixels[y * image.width + x] = static_cast<uint8_t>(getPreviewColourByTilePos({ mapX, mapY }));
             }
         }
 
@@ -234,7 +234,7 @@ namespace OpenRCT2
         drawingEngine->BeginDraw();
 
         Drawing::RenderTarget rt{
-            .bits = image.pixels,
+            .bits = reinterpret_cast<PaletteIndex*>(image.pixels),
             .x = 0,
             .y = 0,
             .width = image.width,
@@ -244,9 +244,9 @@ namespace OpenRCT2
             .DrawingEngine = drawingEngine.get(),
         };
 
-        ViewportRender(rt, &saveVp);
+        //ViewportRender(rt, &saveVp);
 
-        drawingEngine->EndDraw();
+       // drawingEngine->EndDraw();
 
         return image;
     }
@@ -254,7 +254,7 @@ namespace OpenRCT2
     void drawPreviewImage(const PreviewImage& image, Drawing::RenderTarget& rt, ScreenCoordsXY screenPos)
     {
         G1Element g1temp = {};
-        g1temp.offset = reinterpret_cast<uint8_t*>(const_cast<PaletteIndex*>(image.pixels));
+        g1temp.offset = const_cast<uint8_t*>(image.pixels);
         g1temp.width = image.width;
         g1temp.height = image.height;
 
